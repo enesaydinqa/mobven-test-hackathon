@@ -43,7 +43,7 @@ pipeline {
                                                 "-Dsonar.projectKey=TestHackhaton " +
                                                 "-Dsonar.projectVersion=58.0.$BUILD_NUMBER " +
                                                 "-Dsonar.host.url=http://sonar:9000 " +
-                                                "-Dsonar.login=e66760e81b350ab317aedcba5824148f3c3cf918 "
+                                                "-Dsonar.login=9a9abdf39926ddf21ff56912b365bd35dcd389dc "
                                     }
                         }
 
