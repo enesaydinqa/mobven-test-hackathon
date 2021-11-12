@@ -73,7 +73,7 @@ pipeline {
                     publishHTML(target: [allowMissing         : false,
                                          alwaysLinkToLastBuild: true,
                                          keepAll              : true,
-                                         reportDir            : 'hackathon-android/target/',
+                                         reportDir            : 'airbnb-android-test/target/',
                                          reportFiles          : 'HackathonReport.html',
                                          reportName           : 'Hackathon Extent Report',
                                          reportTitles         : 'Android Test Report'])
