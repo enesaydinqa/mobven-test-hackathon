@@ -1,0 +1,12 @@
+# plugins.txt
+configuration-as-code:latest
+job-dsl:latest
+blueocean:latest
+workflow-job:latest
+workflow-cps:latest
+matrix-auth:latest
+simple-theme-plugin:latest
+pipeline-stage-view:latest
+sonar:latest
+ansicolor:latest
+htmlpublisher:latest
