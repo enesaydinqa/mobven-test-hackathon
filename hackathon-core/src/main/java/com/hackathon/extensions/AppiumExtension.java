@@ -1,5 +1,6 @@
 package com.hackathon.extensions;
 
+import com.hackathon.annotation.Driver;
 import com.hackathon.driver.AppiumDriverManager;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
