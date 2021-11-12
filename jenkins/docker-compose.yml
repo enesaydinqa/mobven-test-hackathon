@@ -1,0 +1,89 @@
+version: '3'
+
+services:
+
+  jira:
+    depends_on:
+      - postgresql
+    image: teamatldocker/jira
+    hostname: jira
+    networks:
+      - hackhatonNet
+    volumes:
+      - jiradata:/var/atlassian/jira
+    ports:
+      - '8082:8080'
+    environment:
+      - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
+      - 'JIRA_DB_PASSWORD=jellyfish'
+      - 'SETENV_JVM_MINIMUM_MEMORY=2048m'
+      - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
+      - 'JIRA_PROXY_NAME='
+      - 'JIRA_PROXY_PORT='
+      - 'JIRA_PROXY_SCHEME='
+    logging:
+      # limit logs retained on host to 25MB
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+
+  postgresql:
+    image: postgres:9.5-alpine
+    hostname: postgresql
+    networks:
+      - hackhatonNet
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=jira'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=jellyfish'
+      - 'POSTGRES_DB=jiradb'
+      - 'POSTGRES_ENCODING=UNICODE'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
+    logging:
+      # limit logs retained on host to 25MB
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+
+  sonarqube:
+    image: sonarqube:lts
+    hostname: sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_temp:/opt/sonarqube/temp
+    ports:
+      - 9000:9000
+    networks:
+      - hackhatonNet
+
+  jenkins:
+    build:
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - jenkins-data:/var/jenkins_home
+    hostname: jenkins
+    ports:
+      - '8081:8080'
+    networks:
+      - hackhatonNet
+
+volumes:
+  jiradata:
+  postgresqldata:
+  jenkins-data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonarqube_temp:
+
+networks:
+  hackhatonNet:
+    driver: bridge
