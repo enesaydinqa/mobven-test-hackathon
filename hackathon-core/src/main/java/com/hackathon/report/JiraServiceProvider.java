@@ -23,7 +23,7 @@ public class JiraServiceProvider
 
     public JiraServiceProvider()
     {
-        BasicCredentials creds = new BasicCredentials("testhackhaton", "testhackhaton");
+        BasicCredentials creds = new BasicCredentials("testhackathon", "testhackathon");
         jira = new JiraClient("http://jira:8080/", creds);
         this.project = "TH";
     }
