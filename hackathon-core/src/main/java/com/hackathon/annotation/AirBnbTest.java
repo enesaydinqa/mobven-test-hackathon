@@ -20,6 +20,6 @@ import java.lang.annotation.Target;
 @ExtendWith({AndroidExtension.class, ExtentReportExtension.class})
 @ParameterizedTest
 @ArgumentsSource(CrossDeviceProvider.class)
-public @interface AirbnbTest
+public @interface AirBnbTest
 {
 }
