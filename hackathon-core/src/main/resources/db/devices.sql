@@ -1,1 +1,1 @@
-
+INSERT INTO devices(deviceName, version, appium_url, uid, port, status) VALUES ('test device', '11.0.0', '0.0.0.0', 'ce03171362206cc70c', 15782,'IDLE')

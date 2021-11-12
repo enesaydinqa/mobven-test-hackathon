@@ -30,7 +30,7 @@ public class AndroidExtension extends AppiumExtension implements BeforeTestExecu
         {
             log.info("Test Failed : {}#{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
             String base64ScreeShot = ((TakesScreenshot) Objects.requireNonNull(seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver())).getScreenshotAs(OutputType.BASE64);
-            extensionContext.getRoot().getStore(ExtensionContext.Namespace.create(AndroidExtension.class)).put(extensionContext.getUniqueId(), base64ScreeShot);
+            extensionContext.getRoot().getStore(ExtensionContext.Namespace.create(AndroidDriverFactory.class)).put(extensionContext.getUniqueId(), base64ScreeShot);
         }
 
         String uid = (String) seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver().getCapabilities().getCapability(MobileCapabilityType.UDID);
