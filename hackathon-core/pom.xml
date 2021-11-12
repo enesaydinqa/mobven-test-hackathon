@@ -20,8 +20,7 @@
         <dependency>
             <groupId>net.rcarz</groupId>
             <artifactId>jira-client</artifactId>
-            <version>0.5</version>
-            <scope>compile</scope>
+            <version>0.4</version>
         </dependency>
 
         <dependency>

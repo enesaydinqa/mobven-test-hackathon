@@ -50,8 +50,6 @@ public class AndroidDriverFactory extends DriverFactory
         capabilities.setCapability("unicodeKeyboard", true);
         capabilities.setCapability("appPackage", DriverProp.getDriverProp().getAppPackage());
         capabilities.setCapability("appActivity", DriverProp.getDriverProp().getAppActivity());
-        capabilities.setCapability("useKeystore", true);
-        capabilities.setCapability("keystorePath", DriverProp.getDriverProp().getDebugKeyStore());
         capabilities.setCapability("autoGrantPermissions", true);
         capabilities.setCapability("fastReset", true);
         capabilities.setCapability("clearSystemFiles", true);

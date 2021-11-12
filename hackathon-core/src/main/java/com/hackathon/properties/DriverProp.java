@@ -34,9 +34,6 @@ public class DriverProp
     @Value("#{systemProperties['user.dir']+'${apk.file.path}'}")
     public String apkFilePath;
 
-    @Value("#{systemProperties['user.dir']+'${debug.keystore}'}")
-    public String debugKeyStore;
-
     @Value("${app.package}")
     public String appPackage;
 
