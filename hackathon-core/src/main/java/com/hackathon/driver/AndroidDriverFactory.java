@@ -1,6 +1,9 @@
 package com.hackathon.driver;
 
 import com.hackathon.SeleniumSession;
+import com.hackathon.device.Device;
+import com.hackathon.device.DeviceManagement;
+import com.hackathon.properties.DriverProp;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -20,6 +23,7 @@ import java.util.HashMap;
 @Slf4j
 public class AndroidDriverFactory extends DriverFactory
 {
+    private Device device;
     protected AppiumDriverLocalService service;
 
     public AndroidDriverFactory(SeleniumSession seleniumSession)
@@ -36,16 +40,18 @@ public class AndroidDriverFactory extends DriverFactory
     @Override
     public DesiredCapabilities createDesiredCapabilities()
     {
+        device = DeviceManagement.getDevice();
+
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "device.getDeviceName()");
-        capabilities.setCapability(MobileCapabilityType.APP, "DriverProp.getDriverProp().getApkFilePath()");
-        capabilities.setCapability(MobileCapabilityType.UDID, "device.getUid()");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, device.getVersion());
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, device.getDeviceName());
+        capabilities.setCapability(MobileCapabilityType.APP, DriverProp.getDriverProp().getApkFilePath());
+        capabilities.setCapability(MobileCapabilityType.UDID, device.getUid());
         capabilities.setCapability("unicodeKeyboard", true);
-        capabilities.setCapability("appPackage", "DriverProp.getDriverProp().getAppPackage()");
-        capabilities.setCapability("appActivity", "DriverProp.getDriverProp().getAppActivity()");
+        capabilities.setCapability("appPackage", DriverProp.getDriverProp().getAppPackage());
+        capabilities.setCapability("appActivity", DriverProp.getDriverProp().getAppActivity());
         capabilities.setCapability("useKeystore", true);
-        capabilities.setCapability("keystorePath", "DriverProp.getDriverProp().getDebugKeyStore()");
+        capabilities.setCapability("keystorePath", DriverProp.getDriverProp().getDebugKeyStore());
         capabilities.setCapability("autoGrantPermissions", true);
         capabilities.setCapability("fastReset", true);
         capabilities.setCapability("clearSystemFiles", true);
@@ -100,14 +106,14 @@ public class AndroidDriverFactory extends DriverFactory
     {
         AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder();
         serviceBuilder
-                .usingDriverExecutable(new File(""))
-                .withAppiumJS(new File(""))
+                .usingDriverExecutable(new File(DriverProp.getDriverProp().getNodePath()))
+                .withAppiumJS(new File(DriverProp.getDriverProp().getAppiumPath()))
                 .usingAnyFreePort()
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "error");
 
         HashMap<String, String> environment = new HashMap();
         environment.put("PATH", "/usr/local/bin:" + System.getenv("PATH"));
-        environment.put("ANDROID_HOME", "");
+        environment.put("ANDROID_HOME", DriverProp.getDriverProp().getAndroidHomePath());
         serviceBuilder.withEnvironment(environment);
 
         AppiumDriverLocalService service = AppiumDriverLocalService.buildService(serviceBuilder);

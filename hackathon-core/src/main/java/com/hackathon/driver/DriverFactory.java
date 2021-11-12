@@ -2,12 +2,14 @@ package com.hackathon.driver;
 
 import com.hackathon.SeleniumSession;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 
-public class DriverFactory
+@Slf4j
+public abstract class DriverFactory
 {
     public abstract AppiumDriverLocalService startAppiumServer();
 
