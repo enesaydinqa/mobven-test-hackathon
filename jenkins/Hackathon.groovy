@@ -11,7 +11,7 @@ pipelineJob('Hackathon') {
                     }
                     userRemoteConfigs {
                         userRemoteConfig {
-                            url('https://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@github.com/enesaydinqa/sahibinden-mobile-test-hackathon.git')
+                            url('https://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@github.com/enesaydinqa/mobven-test-hackathon.git')
                             credentialsId('bitbucket-ssh-login')
                             name('origin')
                             refspec('')
