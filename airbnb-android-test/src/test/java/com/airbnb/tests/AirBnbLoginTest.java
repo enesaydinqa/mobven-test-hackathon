@@ -1,7 +1,7 @@
 package com.airbnb.tests;
 
 import com.airbnb.client.AirBnbClient;
-import com.airbnb.pageobjects.AirBnbMainPage;
+import com.airbnb.pageobjects.AirBnbLoginPage;
 import com.hackathon.annotation.AirBnbTest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,9 +13,9 @@ public class AirBnbLoginTest extends AirBnbClient
     @AirBnbTest
     public void login()
     {
-        AirBnbMainPage airBnbMainPage = new AirBnbMainPage(appiumDriverManager);
+        AirBnbLoginPage airBnbLoginPage = new AirBnbLoginPage(appiumDriverManager);
 
-        airBnbMainPage
+        airBnbLoginPage
                 .clickContinueWithEmailBtn()
                 .sendKeysEmailText("email")
                 .clickContinueBtn()
