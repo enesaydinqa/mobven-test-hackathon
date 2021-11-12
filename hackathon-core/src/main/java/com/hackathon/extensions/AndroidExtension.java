@@ -7,7 +7,6 @@ import com.hackathon.driver.DriverAnnotateWrapper;
 import com.hackathon.properties.DriverProp;
 import io.appium.java_client.remote.MobileCapabilityType;
 import lombok.extern.slf4j.Slf4j;
-import org.codehaus.plexus.component.annotations.Configuration;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -19,32 +18,6 @@ import java.util.Objects;
 @Slf4j
 public class AndroidExtension extends AppiumExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback
 {
-
-    @Override
-    public void afterTestExecution(ExtensionContext extensionContext)
-    {
-        ExtensionContext.Store store = extensionContext.getStore(EXTENSION_NAMESPACE);
-        SeleniumSession seleniumSession = store.get(SESSION, SeleniumSession.class);
-
-        if (extensionContext.getExecutionException().isPresent())
-        {
-            log.info("Test Failed : {}#{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
-            String base64ScreeShot = ((TakesScreenshot) Objects.requireNonNull(seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver())).getScreenshotAs(OutputType.BASE64);
-            extensionContext.getRoot().getStore(ExtensionContext.Namespace.create(AndroidDriverFactory.class)).put(extensionContext.getUniqueId(), base64ScreeShot);
-        }
-
-        String uid = (String) seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver().getCapabilities().getCapability(MobileCapabilityType.UDID);
-        seleniumSession.destroyMobileSession();
-
-        if (DriverProp.getDriverProp().getAppiumDriverLocalService())
-        {
-            seleniumSession.getDriverWrapper().stopAppiumSession();
-        }
-
-        DeviceManagement.releaseDevice(uid);
-        log.info("Test Finished : {}#{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
-    }
-
     @Override
     public void beforeTestExecution(ExtensionContext extensionContext)
     {
@@ -59,7 +32,31 @@ public class AndroidExtension extends AppiumExtension implements BeforeTestExecu
 
         String deviceUid = (String) seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver().getCapabilities().getCapability(MobileCapabilityType.UDID);
         extensionContext.getRoot().getStore(ExtensionContext.Namespace.create(AndroidExtension.class)).put(extensionContext.getUniqueId(), deviceUid);
-
         log.info("Test Started : {}#{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
+    }
+
+    @Override
+    public void afterTestExecution(ExtensionContext extensionContext)
+    {
+        ExtensionContext.Store store = extensionContext.getStore(EXTENSION_NAMESPACE);
+        SeleniumSession seleniumSession = store.get(SESSION, SeleniumSession.class);
+
+        if (extensionContext.getExecutionException().isPresent())
+        {
+            log.info("Test Failed : {}#{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
+            String base64ScreeShot = ((TakesScreenshot) Objects.requireNonNull(seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver())).getScreenshotAs(OutputType.BASE64);
+            extensionContext.getRoot().getStore(ExtensionContext.Namespace.create(AndroidExtension.class)).put(extensionContext.getUniqueId(), base64ScreeShot);
+        }
+
+        String uid = (String) seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver().getCapabilities().getCapability(MobileCapabilityType.UDID);
+        seleniumSession.destroyMobileSession();
+
+        if (DriverProp.getDriverProp().getAppiumDriverLocalService())
+        {
+            seleniumSession.getDriverWrapper().stopAppiumSession();
+        }
+
+        DeviceManagement.releaseDevice(uid);
+        log.info("Test Finished : {}#{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
     }
 }

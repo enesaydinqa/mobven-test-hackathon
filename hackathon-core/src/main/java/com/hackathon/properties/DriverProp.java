@@ -31,7 +31,7 @@ public class DriverProp
     @Value("#{systemProperties['appium.driver.local.service'] ?: false}")
     public Boolean appiumDriverLocalService;
 
-    @Value("#{systemProperties['user.dir']+'${apk.file.path}'}")
+    @Value("${apk.file.path}")
     public String apkFilePath;
 
     @Value("${app.package}")

@@ -24,6 +24,7 @@ import java.util.HashMap;
 public class AndroidDriverFactory extends DriverFactory
 {
     private Device device;
+
     protected AppiumDriverLocalService service;
 
     public AndroidDriverFactory(SeleniumSession seleniumSession)

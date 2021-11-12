@@ -2,6 +2,7 @@ package com.hackathon.extensions;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.hackathon.SeleniumSession;
+import com.hackathon.properties.ConfigurationProp;
 import com.hackathon.report.ExtentTestManager;
 import com.hackathon.report.JiraServiceProvider;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -54,18 +55,20 @@ public class ExtentReportExtension implements TestWatcher, BeforeTestExecutionCa
         String base64 = extensionContext.getRoot().getStore(ExtensionContext.Namespace.create(AndroidExtension.class)).get(extensionContext.getUniqueId(), String.class);
         getTest().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String(base64).build());
 
-        //use the project key of jira
-        ExtensionContext.Store store = extensionContext.getStore(ExtensionContext.Namespace.create(AppiumExtension.class));
-        SeleniumSession seleniumSession = store.get("session", SeleniumSession.class);
-        String deviceUid = seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver().getCapabilities().getCapability(MobileCapabilityType.UDID).toString();
+        if (ConfigurationProp.configurationProp.isJiraOpenIssue()){
+            //use the project key of jira
+            ExtensionContext.Store store = extensionContext.getStore(ExtensionContext.Namespace.create(AppiumExtension.class));
+            SeleniumSession seleniumSession = store.get("session", SeleniumSession.class);
+            String deviceUid = seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver().getCapabilities().getCapability(MobileCapabilityType.UDID).toString();
 
-        JiraServiceProvider jiraServiceProvider = new JiraServiceProvider();
-        String issueSummary = extensionContext.getTestClass().get().getSimpleName();
+            JiraServiceProvider jiraServiceProvider = new JiraServiceProvider();
+            String issueSummary = extensionContext.getTestClass().get().getSimpleName();
 
-        String issueDescription = "Test run in device: " + deviceUid + "\n Exception Details: " + cause.getLocalizedMessage();
+            String issueDescription = "Test run in device: " + deviceUid + "\n Exception Details: " + cause.getLocalizedMessage();
 
-        //have to use username of user for reporter
-        jiraServiceProvider.createJiraIssue("Bug", issueSummary, issueDescription, "testhackhaton", base64);
+            //have to use username of user for reporter
+            jiraServiceProvider.createJiraIssue("Bug", issueSummary, issueDescription, "testhackhaton", base64);
+        }
     }
 
 }

@@ -61,6 +61,7 @@ pipeline {
                                                 "-Dnode.path=/opt/node-v14.18.1-linux-x64/bin/node " +
                                                 "-Dappium.path=/opt/node-v14.18.1-linux-x64/bin/appium " +
                                                 "-Dandroid.home=/usr/lib/android-sdk " +
+                                                "-Djira.open.issue=true " +
                                                 "-Djunit.jupiter.execution.parallel.config.fixed.parallelism=${FORK}"
                                     }
                         }
