@@ -16,4 +16,9 @@ public class AppiumDriverManager
         this.driver = appiumDriver;
         this.webDriverWait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
     }
+
+    public AppiumDriver getDriver()
+    {
+        return driver;
+    }
 }
