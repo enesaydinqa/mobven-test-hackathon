@@ -5,6 +5,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class AirBnbMainPage extends AirBnbPageObject
 {
@@ -30,8 +31,6 @@ public class AirBnbMainPage extends AirBnbPageObject
 
     @AndroidFindBy(id = "com.airbnb.android:id/2131432435")
     private MobileElement usernameText;
-
-
 
     ////////////////
 
@@ -59,7 +58,7 @@ public class AirBnbMainPage extends AirBnbPageObject
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='26']")
     private MobileElement secondSelectedDate;
 
-    @AndroidFindBy(xpath = "com.airbnb.android:id/2131430755")
+    @AndroidFindBy(id = "com.airbnb.android:id/2131430755")
     private MobileElement nextOne;
 
     @AndroidFindBy(id = "com.airbnb.android:id/2131431137")
@@ -74,8 +73,8 @@ public class AirBnbMainPage extends AirBnbPageObject
     @AndroidFindBy(id = "com.airbnb.android:id/2131431290")
     private MobileElement showPlacesToStay;
 
-    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc='Favorilere ekleyin'][0]")
-    private MobileElement addFavorites;
+    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc='Favorilere ekleyin']")
+    private List<MobileElement> addFavorites;
 
 
     @AndroidFindBy(id = "com.airbnb.android:id/2131428776")
@@ -94,7 +93,23 @@ public class AirBnbMainPage extends AirBnbPageObject
     private MobileElement closeClue;
 
     @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc='Favorilere ekleyin']")
-    private List<MobileElement> favoriteSize;
+    private List<MobileElement> favoriteListSize;
+
+    //////////////////////////
+
+
+    @AndroidFindBy(id = "com.airbnb.android:id/2131431854")
+    private MobileElement whishListSettings;
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Bu favori listesini silin']")
+    private MobileElement deleteFavoriteList;
+
+    @AndroidFindBy(id = "android:id/button1")
+    private MobileElement deleteBtn;
+
+
+    ////////////////////////////
+
 
 
     public AirBnbMainPage clickContinueWithEmailBtn()
@@ -130,5 +145,116 @@ public class AirBnbMainPage extends AirBnbPageObject
     public Boolean assertUsernameDisplayed(String username)
     {
         return appiumDriverManager.isTextDisplayedOnPage(username);
+    }
+
+    /////////////////////////////////////////
+
+    public void clickDiscover()
+    {
+        appiumDriverManager.waitAndClick(discover);
+    }
+
+    public void clickSearch()
+    {
+        appiumDriverManager.waitAndClick(search);
+    }
+
+    public void clickBackBtn()
+    {
+        appiumDriverManager.waitAndClick(backButton);
+    }
+
+    public void sendKeysWhereToGo(String keys)
+    {
+        appiumDriverManager.waitAndSendKeys(whereToGo, keys);
+    }
+
+    public void clickCityAntalya()
+    {
+        appiumDriverManager.waitAndSendKeys(cityAntalya);
+    }
+
+    public void clickFindPlaceToStay()
+    {
+        appiumDriverManager.waitAndClick(findPlaceToStay);
+    }
+
+    public void enterDateData()
+    {
+        Stream.of(firstSelectedDate, secondSelectedDate)
+                .forEach(appiumDriverManager::waitAndClick);
+    }
+
+    public void clickNextOne()
+    {
+        appiumDriverManager.waitAndClick(nextOne);
+    }
+
+    public void clickAddPerson()
+    {
+        appiumDriverManager.waitAndClick(addPerson);
+    }
+
+    public void clickEndSearch()
+    {
+        appiumDriverManager.waitAndClick(searchEndBtn);
+    }
+
+    public void clickWifi()
+    {
+        appiumDriverManager.waitAndClick(wifi);
+    }
+
+    public void clickShowPlacesToStay()
+    {
+        appiumDriverManager.waitAndClick(showPlacesToStay);
+    }
+
+    public void clickAddFavorite(int index)
+    {
+        appiumDriverManager.waitAndClick(addFavorites.get(index));
+    }
+
+    public void clickCreate()
+    {
+        appiumDriverManager.waitAndClick(create);
+    }
+
+    public void clickFavorites()
+    {
+        appiumDriverManager.waitAndClick(favorites);
+    }
+
+    public void clickWishListTitle()
+    {
+        appiumDriverManager.waitAndClick(title);
+    }
+
+    public void clickCloseClue()
+    {
+        appiumDriverManager.waitAndClick(closeClue);
+    }
+
+    public int getSize()
+    {
+        return favoriteListSize.size();
+    }
+
+
+    ///////////////
+
+    public void clickWhishListSettings()
+    {
+        appiumDriverManager.waitAndClick(whishListSettings);
+    }
+
+    public void clickDeleteFavoriteList()
+    {
+        appiumDriverManager.waitAndClick(deleteFavoriteList);
+    }
+
+    public void clickDelete()
+    {
+        appiumDriverManager.waitAndClick(deleteBtn);
     }
 }
