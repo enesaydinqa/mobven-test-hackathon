@@ -23,7 +23,7 @@ pipelineJob('Hackathon') {
                     gitTool('')
                 }
             }
-            scriptPath('jenkins-file/AndroidPipeline.jenkinsfile')
+            scriptPath('jenkins-file/AirbnbPipeline.jenkinsfile')
         }
     }
 }
