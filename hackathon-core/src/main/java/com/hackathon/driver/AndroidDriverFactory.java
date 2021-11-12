@@ -1,6 +1,7 @@
 package com.hackathon.driver;
 
 import com.hackathon.SeleniumSession;
+import com.hackathon.properties.DriverProp;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
