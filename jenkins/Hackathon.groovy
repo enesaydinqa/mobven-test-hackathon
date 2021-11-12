@@ -6,7 +6,7 @@ pipelineJob('Hackathon') {
                 gitSCM {
                     branches {
                         branchSpec {
-                            name('*/sonar-2')
+                            name('*/master')
                         }
                     }
                     userRemoteConfigs {
