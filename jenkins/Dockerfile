@@ -2,9 +2,9 @@ FROM jenkins/jenkins:lts-jdk11
 
 USER root
 
-COPY plugins.txt /usr/share/jenkins/plugins.txt
-COPY jenkins-casc.yaml /usr/local/jenkins-casc.yaml
-COPY Hackathon.groovy /usr/local/Hackathon.groovy
+COPY jenkins/plugins.txt /usr/share/jenkins/plugins.txt
+COPY jenkins/jenkins-casc.yaml /usr/local/jenkins-casc.yaml
+COPY jenkins/Hackathon.groovy /usr/local/Hackathon.groovy
 
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
 
