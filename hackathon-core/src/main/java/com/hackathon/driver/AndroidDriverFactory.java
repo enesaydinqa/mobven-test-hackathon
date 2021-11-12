@@ -1,13 +1,20 @@
 package com.hackathon.driver;
 
 import com.hackathon.SeleniumSession;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 
 @Slf4j
@@ -20,7 +27,75 @@ public class AndroidDriverFactory extends DriverFactory
         super(seleniumSession);
     }
 
+    @Override
+    public DesiredCapabilities prepareDriver()
+    {
+        return createDesiredCapabilities();
+    }
+
+    @Override
+    public DesiredCapabilities createDesiredCapabilities()
+    {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "device.getDeviceName()");
+        capabilities.setCapability(MobileCapabilityType.APP, "DriverProp.getDriverProp().getApkFilePath()");
+        capabilities.setCapability(MobileCapabilityType.UDID, "device.getUid()");
+        capabilities.setCapability("unicodeKeyboard", true);
+        capabilities.setCapability("appPackage", "DriverProp.getDriverProp().getAppPackage()");
+        capabilities.setCapability("appActivity", "DriverProp.getDriverProp().getAppActivity()");
+        capabilities.setCapability("useKeystore", true);
+        capabilities.setCapability("keystorePath", "DriverProp.getDriverProp().getDebugKeyStore()");
+        capabilities.setCapability("autoGrantPermissions", true);
+        capabilities.setCapability("fastReset", true);
+        capabilities.setCapability("clearSystemFiles", true);
+        capabilities.setCapability("disableAndroidWatchers", true);
+        capabilities.setCapability("noSign", true);
+        capabilities.setCapability("newCommandTimeout", "600");
+        capabilities.setCapability("automationName", "UiAutomator2");
+        return capabilities;
+    }
+
+    @Override
+    public RemoteWebDriver createDriver(DriverAnnotateWrapper driverAnnotateWrapper) throws MalformedURLException
+    {
+        DesiredCapabilities capabilities = prepareDriver();
+
+        AppiumDriver appiumDriver;
+        if (DriverProp.getDriverProp().getAppiumDriverLocalService())
+        {
+            service = startAppiumServer();
+            appiumDriver = new AndroidDriver<>(service.getUrl(), capabilities);
+            log.info("local appium session is created!");
+        }
+        else
+        {
+            URL url = new URL("http://" + device.getAppiumUrl() + ":" + device.getPort() + "/wd/hub");
+            appiumDriver = new AndroidDriver<>(url, capabilities);
+            log.info("appium session is created on url :" + url);
+        }
+
+        return appiumDriver;
+    }
+
+    @Override
+    public SeleniumSession.DriverWrapper initSessionProxy(DriverAnnotateWrapper driverAnnotateWrapper)
+    {
+        try
+        {
+            AppiumDriver appiumDriver = (AppiumDriver) createDriver(driverAnnotateWrapper);
+
+            driver = new SeleniumSession.DriverWrapper(driverAnnotateWrapper, new AppiumDriverManager(appiumDriver), service);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return driver;
+    }
+
     @SuppressWarnings("unchecked")
+    @Override
     public AppiumDriverLocalService startAppiumServer()
     {
         AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder();
