@@ -5,6 +5,7 @@ USER root
 COPY jenkins/plugins.txt /usr/share/jenkins/plugins.txt
 COPY jenkins/jenkins-casc.yaml /usr/local/jenkins-casc.yaml
 COPY jenkins/Hackathon.groovy /usr/local/Hackathon.groovy
+COPY jenkins/airbnb.apk /opt/airbnb.apk
 
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
 
