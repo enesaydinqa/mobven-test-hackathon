@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 @Slf4j
-public class AndroidExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback
+public class AndroidExtension extends AppiumExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback
 {
 
     @Override
