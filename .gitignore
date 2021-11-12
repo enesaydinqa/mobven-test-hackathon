@@ -31,7 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-/tracking-devices/node_modules
-/tracking-devices/package-lock.json
-/tracking-devices/tracking-devices.iml
