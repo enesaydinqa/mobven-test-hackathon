@@ -22,6 +22,18 @@ public class AndroidExtension extends AppiumExtension implements BeforeTestExecu
     @Override
     public void beforeTestExecution(ExtensionContext extensionContext)
     {
+        ExtensionContext.Store store = extensionContext.getStore(EXTENSION_NAMESPACE);
+        Object testInstance = extensionContext.getRequiredTestInstance();
+        DriverAnnotateWrapper driver = DriverAnnotateWrapper.createFromDriver(AndroidDriverFactory.class);
+        SeleniumSession seleniumSession = createSeleniumSession(driver);
+        seleniumSession.initSession();
+        appiumDriverManager = seleniumSession.getDriverWrapper().getAppiumDriverManager();
+        getInstanceForGlobalVariables(extensionContext, testInstance, appiumDriverManager);
+        store.put(SESSION, seleniumSession);
+
+        String deviceUid = (String) seleniumSession.getDriverWrapper().getAppiumDriverManager().getDriver().getCapabilities().getCapability(MobileCapabilityType.UDID);
+        extensionContext.getRoot().getStore(ExtensionContext.Namespace.create(AndroidExtension.class)).put(extensionContext.getUniqueId(), deviceUid);
+
         log.info("Test Started : {}#{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
     }
 }
