@@ -40,9 +40,17 @@ public class AirBnbFavoritePage extends AirBnbPageObject
     @AndroidFindBy(id = "android:id/button1")
     private MobileElement deleteBtn;
 
+    @AndroidFindBy(xpath = "//*[@text='Hackathon']")
+    private MobileElement favoriteTextName;
+
 
     //****************
 
+    public AirBnbFavoritePage sendKeysFavoriteTitle(String keys)
+    {
+        appiumDriverManager.waitAndSendKeys(favoriteTextField, keys);
+        return this;
+    }
 
     public AirBnbFavoritePage clickCreate()
     {
@@ -89,5 +97,10 @@ public class AirBnbFavoritePage extends AirBnbPageObject
     {
         appiumDriverManager.waitAndClick(deleteBtn);
         return this;
+    }
+
+    public Boolean isFavoriteDisplayed()
+    {
+        return favoriteTextName.isDisplayed();
     }
 }
