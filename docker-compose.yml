@@ -65,7 +65,7 @@ services:
 
   jenkins:
     build:
-      dockerfile: Dockerfile
+      dockerfile: jenkins/Dockerfile
     restart: unless-stopped
     volumes:
       - jenkins-data:/var/jenkins_home
