@@ -67,7 +67,7 @@ public class ExtentReportExtension implements TestWatcher, BeforeTestExecutionCa
             String issueDescription = "Test run in device: " + deviceUid + "\n Exception Details: " + cause.getLocalizedMessage();
 
             //have to use username of user for reporter
-            jiraServiceProvider.createJiraIssue("Bug", issueSummary, issueDescription, "testhackhaton", base64);
+            jiraServiceProvider.createJiraIssue("Bug", issueSummary, issueDescription, "testhackathon", base64);
         }
     }
 
