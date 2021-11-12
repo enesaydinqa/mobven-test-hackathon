@@ -20,9 +20,10 @@ public class AirBnbMainPage extends AirBnbPageObject
     @AndroidFindBy(id = "com.airbnb.android:id/2131429019")
     private MobileElement search;
 
-    public void clickDiscover()
+    public AirBnbSearchPage clickDiscover()
     {
         appiumDriverManager.waitAndClick(discover);
+        return new AirBnbSearchPage(appiumDriverManager);
     }
 
     public void clickSearch()

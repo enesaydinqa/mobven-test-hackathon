@@ -1,5 +1,8 @@
 package com.airbnb.client;
 
+import com.airbnb.pageobjects.AirBnbLoginPage;
+import com.airbnb.pageobjects.AirBnbMainPage;
+import com.airbnb.utils.AirBnbUtils;
 import com.hackathon.annotation.Driver;
 import com.hackathon.driver.AppiumDriverManager;
 import com.hackathon.report.ExtentReportManager;
@@ -16,5 +19,19 @@ public class AirBnbClient
     public static void afterAll()
     {
         ExtentReportManager.extentReports.flush();
+    }
+
+    public AirBnbMainPage loginAirBnb()
+    {
+        AirBnbLoginPage airBnbLoginPage = new AirBnbLoginPage(appiumDriverManager);
+
+        airBnbLoginPage
+                .clickContinueWithEmailBtn()
+                .sendKeysEmailText(AirBnbUtils.email)
+                .clickContinueBtn()
+                .sendKeysPasswordText(AirBnbUtils.password)
+                .clickContinueBtn();
+
+        return new AirBnbMainPage(appiumDriverManager);
     }
 }

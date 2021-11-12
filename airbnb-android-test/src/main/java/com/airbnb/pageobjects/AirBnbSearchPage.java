@@ -103,9 +103,9 @@ public class AirBnbSearchPage extends AirBnbPageObject
         return this;
     }
 
-    public AirBnbSearchPage clickAddFavorite(int index)
+    public AirBnbFavoritePage clickAddFavorite(int index)
     {
         appiumDriverManager.waitAndClick(addFavorites.get(index));
-        return this;
+        return new AirBnbFavoritePage(appiumDriverManager);
     }
 }
