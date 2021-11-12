@@ -2,6 +2,7 @@ package com.airbnb.tests;
 
 import com.airbnb.client.AirBnbClient;
 import com.airbnb.pageobjects.AirBnbLoginPage;
+import com.airbnb.utils.AirBnbUtils;
 import com.hackathon.annotation.AirBnbTest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,9 +18,9 @@ public class AirBnbLoginTest extends AirBnbClient
 
         airBnbLoginPage
                 .clickContinueWithEmailBtn()
-                .sendKeysEmailText("email")
+                .sendKeysEmailText(AirBnbUtils.email)
                 .clickContinueBtn()
-                .sendKeysPasswordText("password")
+                .sendKeysPasswordText(AirBnbUtils.password)
                 .clickContinueBtn();
     }
 }
