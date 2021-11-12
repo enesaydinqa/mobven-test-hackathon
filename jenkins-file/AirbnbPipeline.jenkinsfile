@@ -10,6 +10,22 @@ pipeline {
 
     stages
             {
+                stage('ADB Connect')
+                        {
+                            steps
+                                    {
+                                        sh "${env.WORKSPACE}/adb-connect.sh"
+                                    }
+                        }
+
+                stage('Update Device SQL')
+                        {
+                            steps
+                                    {
+                                        sh "${env.WORKSPACE}/devices.sh"
+                                    }
+                        }
+
                 stage('Build')
                         {
                             steps
