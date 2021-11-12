@@ -48,54 +48,64 @@ public class AirBnbSearchPage extends AirBnbPageObject
     private List<MobileElement> addFavorites;
 
 
-    public void sendKeysWhereToGo(String keys)
+    public AirBnbSearchPage sendKeysWhereToGo(String keys)
     {
         appiumDriverManager.waitAndSendKeys(whereToGo, keys);
+        return this;
     }
 
-    public void clickCityAntalya()
+    public AirBnbSearchPage clickCityAntalya()
     {
         appiumDriverManager.waitAndSendKeys(cityAntalya);
+        return this;
     }
 
-    public void clickFindPlaceToStay()
+    public AirBnbSearchPage clickFindPlaceToStay()
     {
         appiumDriverManager.waitAndClick(findPlaceToStay);
+        return this;
     }
 
-    public void enterDateData()
+    public AirBnbSearchPage enterDateData()
     {
         Stream.of(firstSelectedDate, secondSelectedDate)
                 .forEach(appiumDriverManager::waitAndClick);
+        return this;
     }
 
-    public void clickNextOne()
+    public AirBnbSearchPage clickNextOne()
     {
         appiumDriverManager.waitAndClick(nextOne);
+        return this;
     }
 
-    public void clickAddPerson()
+    public AirBnbSearchPage clickAddPerson()
     {
         appiumDriverManager.waitAndClick(addPerson);
+        return this;
     }
 
-    public void clickEndSearch()
+    public AirBnbSearchPage clickEndSearch()
     {
         appiumDriverManager.waitAndClick(searchEndBtn);
+        return this;
     }
 
-    public void clickWifi()
+    public AirBnbSearchPage clickWifi()
     {
         appiumDriverManager.waitAndClick(wifi);
+        return this;
     }
 
-    public void clickShowPlacesToStay()
+    public AirBnbSearchPage clickShowPlacesToStay()
     {
         appiumDriverManager.waitAndClick(showPlacesToStay);
+        return this;
     }
 
-    public void clickAddFavorite(int index)
+    public AirBnbSearchPage clickAddFavorite(int index)
     {
         appiumDriverManager.waitAndClick(addFavorites.get(index));
+        return this;
     }
 }
